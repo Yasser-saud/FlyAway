@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Add AirLine</title>
+    <title>Add Airline</title>
 </head>
 <body>
     <% if(request.getParameter("error") != null){

@@ -18,12 +18,12 @@ public class Flight {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn
-    private AirLine airLine;
+    private Airline airLine;
 
     public Flight() {
     }
 
-    public Flight(int price, Place place, AirLine airLine) {
+    public Flight(int price, Place place, Airline airLine) {
         this.price = price;
         this.place = place;
         this.airLine = airLine;
@@ -53,11 +53,11 @@ public class Flight {
         this.place = place;
     }
 
-    public AirLine getAirLine() {
+    public Airline getAirLine() {
         return airLine;
     }
 
-    public void setAirLine(AirLine airLine) {
+    public void setAirLine(Airline airLine) {
         this.airLine = airLine;
     }
 }

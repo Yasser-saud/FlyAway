@@ -1,6 +1,6 @@
 package com.example.SpringMvc.controller;
 
-import com.example.SpringMvc.model.AirLine;
+import com.example.SpringMvc.model.Airline;
 import com.example.SpringMvc.model.Place;
 import com.example.SpringMvc.serves.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,12 +54,12 @@ public class AdminController {
 
     @GetMapping("/dashboard/add-airline")
     public String addAirLinePage(){
-        return "addAirLineForm";
+        return "addAirlineForm";
     }
 
     @PostMapping("/dashboard/add-airline")
     public String addAirLineHandler(@RequestParam String name){
-        return adminService.addAirLine(new AirLine(name));
+        return adminService.addAirLine(new Airline(name));
     }
 
     @GetMapping("/dashboard/add-flight")

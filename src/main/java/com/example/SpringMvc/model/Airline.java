@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "airline")
-public class AirLine {
+public class Airline {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
@@ -12,7 +12,7 @@ public class AirLine {
     @Column(name = "name")
     private String name;
 
-    public AirLine() {
+    public Airline() {
     }
 
     public int getId() {
@@ -23,7 +23,7 @@ public class AirLine {
         this.id = id;
     }
 
-    public AirLine(String name) {
+    public Airline(String name) {
         this.name = name;
     }
 

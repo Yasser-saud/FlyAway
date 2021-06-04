@@ -92,12 +92,12 @@
         <div>
            <div class="col-wrapper">
                <div class="col">
-                   <h2>AirLines</h2>
-                   <c:forEach items="${airLineList}" var="airline">
+                   <h2>Airlines</h2>
+                   <c:forEach items="${airlineList}" var="airline">
                        <p>${airline.name}</p>
                    </c:forEach>
                </div>
-               <a class="btn" href="dashboard/add-airline">Add AirLine</a>
+               <a class="btn" href="dashboard/add-airline">Add Airline</a>
            </div>
         </div>
         <div class="col-wrapper">

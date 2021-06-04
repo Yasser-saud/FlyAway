@@ -1,9 +1,9 @@
 package com.example.SpringMvc.serves;
 
-import com.example.SpringMvc.Repo.AirLineRepo;
+import com.example.SpringMvc.Repo.AirlineRepo;
 import com.example.SpringMvc.Repo.FlightRepo;
 import com.example.SpringMvc.Repo.PlaceRepo;
-import com.example.SpringMvc.model.AirLine;
+import com.example.SpringMvc.model.Airline;
 import com.example.SpringMvc.model.Flight;
 import com.example.SpringMvc.model.Place;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,13 @@ public class AdminService {
 
 
     private final PlaceRepo placeRepo;
-    private final AirLineRepo airLineRepo;
+    private final AirlineRepo airlineRepo;
     private final FlightRepo flightRepo;
 
     @Autowired
-    public AdminService(PlaceRepo placeRepo, AirLineRepo airLineRepo, FlightRepo flightRepo) {
+    public AdminService(PlaceRepo placeRepo, AirlineRepo airlineRepo, FlightRepo flightRepo) {
         this.placeRepo = placeRepo;
-        this.airLineRepo = airLineRepo;
+        this.airlineRepo = airlineRepo;
         this.flightRepo = flightRepo;
     }
 
@@ -48,11 +48,11 @@ public class AdminService {
         }
 
         List<Place> placeList = placeRepo.getAllPlaces();
-        List<AirLine> airLineList = airLineRepo.getAllAirLines();
+        List<Airline> airlineList = airlineRepo.getAllAirLines();
         List<Flight> flightList = flightRepo.getAllFlights();
 
         mav.addObject("placeList", placeList);
-        mav.addObject("airLineList", airLineList);
+        mav.addObject("airLineList", airlineList);
         mav.addObject("flightList", flightList);
 
         return mav;
@@ -66,18 +66,18 @@ public class AdminService {
         return "redirect:/dashboard";
     }
 
-    public String addAirLine(AirLine airLine){
+    public String addAirLine(Airline airLine){
         if(airLine.getName().length() <= 0 ){
             return "redirect:/dashboard/add-airline?error=1";
         }
-        airLineRepo.addAirLine(airLine);
+        airlineRepo.addAirLine(airLine);
         return "redirect:/dashboard";
     }
 
     public ModelAndView getAddFlightForm(){
         ModelAndView mav = new ModelAndView("addFlightForm");
         mav.addObject("placeList", placeRepo.getAllPlaces());
-        mav.addObject("airlineList", airLineRepo.getAllAirLines());
+        mav.addObject("airlineList", airlineRepo.getAllAirLines());
         return mav;
     }
 
@@ -86,7 +86,7 @@ public class AdminService {
             return new ModelAndView("redirect:/dashboard/add-flight?error=1");
         }
         Place place = placeRepo.getById(placeId);
-        AirLine airline = airLineRepo.getById(airlineId);
+        Airline airline = airlineRepo.getById(airlineId);
 
         flightRepo.addFlight(new Flight(
                 price, place, airline
