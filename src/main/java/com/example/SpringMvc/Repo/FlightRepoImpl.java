@@ -1,5 +1,6 @@
 package com.example.SpringMvc.Repo;
 
+import com.example.SpringMvc.model.Flight;
 import com.example.SpringMvc.model.Place;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,28 +11,27 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class PlaceRepoImpl implements PlaceRepo {
-
+public class FlightRepoImpl implements FlightRepo{
 
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public PlaceRepoImpl(SessionFactory sessionFactory) {
+    public FlightRepoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public void addPlace(Place place) {
-        sessionFactory.getCurrentSession().save(place);
+    public void addFlight(Flight flight) {
+        sessionFactory.getCurrentSession().save(flight);
     }
 
     @Override
-    public List<Place> getAllPlaces() {
-        return sessionFactory.getCurrentSession().createQuery("from Place").list();
+    public List<Flight> getAllFlights() {
+        return sessionFactory.getCurrentSession().createQuery("from Flight ").list();
     }
 
     @Override
-    public Place getById(Integer placeId) {
-        return sessionFactory.getCurrentSession().get(Place.class, placeId);
+    public Flight getById(Integer flightId) {
+        return sessionFactory.getCurrentSession().get(Flight.class, flightId);
     }
 }

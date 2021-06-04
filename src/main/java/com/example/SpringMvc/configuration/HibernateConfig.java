@@ -1,6 +1,7 @@
 package com.example.SpringMvc.configuration;
 
 import com.example.SpringMvc.model.AirLine;
+import com.example.SpringMvc.model.Flight;
 import com.example.SpringMvc.model.Place;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class HibernateConfig {
         properties.put("hibernate.show_sql","true");
         properties.put("hibernate.hbm2ddl.auto","update");
         factoryBean.setHibernateProperties(properties);
-        factoryBean.setAnnotatedClasses(Place.class, AirLine.class);
+        factoryBean.setAnnotatedClasses(Place.class, AirLine.class, Flight.class);
         return factoryBean;
     }
 

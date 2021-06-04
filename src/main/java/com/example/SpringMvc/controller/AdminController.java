@@ -49,7 +49,6 @@ public class AdminController {
 
     @PostMapping("/dashboard/add-place")
     public String addPlaceHandler(@RequestParam String source, @RequestParam String destination){
-
         return adminService.addPlace(new Place(source, destination));
     }
 
@@ -61,5 +60,15 @@ public class AdminController {
     @PostMapping("/dashboard/add-airline")
     public String addAirLineHandler(@RequestParam String name){
         return adminService.addAirLine(new AirLine(name));
+    }
+
+    @GetMapping("/dashboard/add-flight")
+    public ModelAndView addFlightPage(){
+        return adminService.getAddFlightForm();
+    }
+
+    @PostMapping("/dashboard/add-flight")
+    public ModelAndView addFlightHandler(@RequestParam int placeId, @RequestParam int airlineId, @RequestParam int price){
+        return adminService.addNewFlight(placeId, airlineId, price);
     }
 }

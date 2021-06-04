@@ -15,6 +15,14 @@ public class AirLine {
     public AirLine() {
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public AirLine(String name) {
         this.name = name;
     }
