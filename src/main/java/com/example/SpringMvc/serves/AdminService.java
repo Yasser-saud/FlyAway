@@ -1,6 +1,8 @@
 package com.example.SpringMvc.serves;
 
+import com.example.SpringMvc.Repo.AirLineRepo;
 import com.example.SpringMvc.Repo.PlaceRepo;
+import com.example.SpringMvc.model.AirLine;
 import com.example.SpringMvc.model.Place;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +17,12 @@ public class AdminService {
 
 
     private final PlaceRepo placeRepo;
+    private final AirLineRepo airLineRepo;
 
     @Autowired
-    public AdminService(PlaceRepo placeRepo) {
+    public AdminService(PlaceRepo placeRepo, AirLineRepo airLineRepo) {
         this.placeRepo = placeRepo;
+        this.airLineRepo = airLineRepo;
     }
 
     public String login(String username, String password, HttpServletRequest req){
@@ -39,15 +43,25 @@ public class AdminService {
         }
 
         List<Place> placeList = placeRepo.getAllPlaces();
+        List<AirLine> airLineList = airLineRepo.getAllAirLines();
         mav.addObject("placeList", placeList);
+        mav.addObject("airLineList", airLineList);
         return mav;
     }
 
     public String addPlace(Place place){
-        if(place.getDestination().length() <= 0 || place.getDestination().length() <= 0){
+        if(place.getSource().length() <= 0 || place.getDestination().length() <= 0){
             return "redirect:/dashboard/add-place?error=1";
         }
         placeRepo.addPlace(place);
+        return "redirect:/dashboard";
+    }
+
+    public String addAirLine(AirLine airLine){
+        if(airLine.getName().length() <= 0 ){
+            return "redirect:/dashboard/add-airline?error=1";
+        }
+        airLineRepo.addAirLine(airLine);
         return "redirect:/dashboard";
     }
 }

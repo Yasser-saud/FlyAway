@@ -62,11 +62,21 @@
             </div>
             <a href="dashboard/add-place">Add Places</a>
         </div>
-        <div class="col">
-            flights
+
+        <div>
+            <div class="col">
+                <h2>AirLines</h2>
+                <c:forEach items="${airLineList}" var="airline">
+                    <p>${airline.name}</p>
+                </c:forEach>
+            </div>
+            <a href="dashboard/add-airline">Add AirLine</a>
         </div>
-        <div class="col">
-            Airlines
+        <div>
+            <div class="col">
+                flights
+            </div>
+
         </div>
     </div>
 </body>

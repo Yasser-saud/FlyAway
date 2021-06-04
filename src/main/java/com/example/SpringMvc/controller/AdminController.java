@@ -1,6 +1,6 @@
 package com.example.SpringMvc.controller;
 
-import com.example.SpringMvc.Repo.PlaceRepoImpl;
+import com.example.SpringMvc.model.AirLine;
 import com.example.SpringMvc.model.Place;
 import com.example.SpringMvc.serves.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +44,22 @@ public class AdminController {
 
     @GetMapping("/dashboard/add-place")
     public String addPlacePage(){
-        return "addplace";
+        return "addPlaceForm";
     }
 
     @PostMapping("/dashboard/add-place")
     public String addPlaceHandler(@RequestParam String source, @RequestParam String destination){
 
         return adminService.addPlace(new Place(source, destination));
+    }
+
+    @GetMapping("/dashboard/add-airline")
+    public String addAirLinePage(){
+        return "addAirLineForm";
+    }
+
+    @PostMapping("/dashboard/add-airline")
+    public String addAirLineHandler(@RequestParam String name){
+        return adminService.addAirLine(new AirLine(name));
     }
 }
