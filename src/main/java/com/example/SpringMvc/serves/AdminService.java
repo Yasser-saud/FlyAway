@@ -1,8 +1,10 @@
 package com.example.SpringMvc.serves;
 
+import com.example.SpringMvc.Repo.AdminRepo;
 import com.example.SpringMvc.Repo.AirlineRepo;
 import com.example.SpringMvc.Repo.FlightRepo;
 import com.example.SpringMvc.Repo.PlaceRepo;
+import com.example.SpringMvc.model.Admin;
 import com.example.SpringMvc.model.Airline;
 import com.example.SpringMvc.model.Flight;
 import com.example.SpringMvc.model.Place;
@@ -17,26 +19,36 @@ import java.util.List;
 @Service
 public class AdminService {
 
-
     private final PlaceRepo placeRepo;
     private final AirlineRepo airlineRepo;
     private final FlightRepo flightRepo;
+    private final AdminRepo adminRepo;
 
     @Autowired
-    public AdminService(PlaceRepo placeRepo, AirlineRepo airlineRepo, FlightRepo flightRepo) {
+    public AdminService(PlaceRepo placeRepo, AirlineRepo airlineRepo, FlightRepo flightRepo, AdminRepo adminRepo) {
         this.placeRepo = placeRepo;
         this.airlineRepo = airlineRepo;
         this.flightRepo = flightRepo;
+        this.adminRepo = adminRepo;
     }
 
     public String login(String username, String password, HttpServletRequest req){
         if(username.length() <= 0 || password.length() <= 0){
             return "redirect:/login?error=1";
         }
+
+        Admin admin = adminRepo.getByUsername(username);
+
+        if(adminRepo.getByUsername(username) == null){
+            return "redirect:/login?error=2";
+        }
+        else if(!adminRepo.getByUsername(username).getPassword().equals(password)){
+            return "redirect:/login?error=3";
+        }
         HttpSession session = req.getSession();
-        session.setAttribute("admin", username);
-        session.setAttribute("password", password);
-        return "redirect:/dashboard";
+        session.setAttribute("admin", admin);
+
+        return "redirect:/login";
     }
 
     public ModelAndView getDashboard(HttpServletRequest req){

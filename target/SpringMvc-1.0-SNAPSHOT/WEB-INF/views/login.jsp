@@ -12,8 +12,18 @@
 </head>
 <body>
     <h1>Login</h1>
-    <% if(request.getParameter("error") != null){
-        out.println("<h3>username or password is wrong</h3>");
+    <%
+        if(request.getParameter("error") != null){
+            String param = request.getParameter("error");
+            if(param.equals("2")){
+                out.println("<h3>username does not exist</h3>");
+            }
+            else if(param.equals("3")){
+                out.println("<h3>username or password is wrong</h3>");
+            }
+            else {
+                out.println("<h3>Please fill the field</h3>");
+            }
     }%>
     <form action="login" method="post">
         <label>username</label>
