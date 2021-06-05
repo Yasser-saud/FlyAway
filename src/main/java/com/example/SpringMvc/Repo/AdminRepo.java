@@ -8,4 +8,5 @@ import java.util.List;
 public interface AdminRepo {
     void addAdmin(Admin admin);
     Admin getByUsername(String username);
+    int updatePassword(int id,String password);
 }

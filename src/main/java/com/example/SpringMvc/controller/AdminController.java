@@ -26,9 +26,10 @@ public class AdminController {
     @GetMapping("/login")
     public String adminPage(HttpServletRequest req){
         HttpSession session = req.getSession();
-        if(session.getAttribute("admin") != null){
+        boolean isAdmin = adminService.isAdmin(req);
+        if(isAdmin)
             return "redirect:/dashboard";
-        }
+
         return "login";
     }
 
@@ -43,18 +44,25 @@ public class AdminController {
     }
 
     @GetMapping("/dashboard/add-place")
-    public String addPlacePage(){
-        return "addPlaceForm";
+    public String addPlacePage(HttpServletRequest req){
+        boolean isAdmin = adminService.isAdmin(req);
+        if(isAdmin)
+            return "addPlaceForm";
+
+        return "redirect:/login";
     }
 
     @PostMapping("/dashboard/add-place")
-    public String addPlaceHandler(@RequestParam String source, @RequestParam String destination){
+    public String addPlaceHandler(@RequestParam String source, @RequestParam String destination, HttpServletRequest req){
         return adminService.addPlace(new Place(source, destination));
     }
 
     @GetMapping("/dashboard/add-airline")
-    public String addAirLinePage(){
-        return "addAirlineForm";
+    public String addAirLinePage(HttpServletRequest req){
+        boolean isAdmin = adminService.isAdmin(req);
+        if(isAdmin)
+            return "addAirlineForm";
+        return "redirect:/login";
     }
 
     @PostMapping("/dashboard/add-airline")
@@ -63,12 +71,30 @@ public class AdminController {
     }
 
     @GetMapping("/dashboard/add-flight")
-    public ModelAndView addFlightPage(){
-        return adminService.getAddFlightForm();
+    public ModelAndView addFlightPage(HttpServletRequest req){
+        boolean isAdmin = adminService.isAdmin(req);
+        if(isAdmin)
+            return adminService.getAddFlightForm();
+
+        return new ModelAndView("redirect:/login");
     }
 
     @PostMapping("/dashboard/add-flight")
     public ModelAndView addFlightHandler(@RequestParam int placeId, @RequestParam int airlineId, @RequestParam int price){
         return adminService.addNewFlight(placeId, airlineId, price);
+    }
+
+    @GetMapping("/admin/reset")
+    public String resetPage(HttpServletRequest req){
+        boolean isAdmin = adminService.isAdmin(req);
+        if(isAdmin)
+            return "changePass";
+
+        return "redirect:/login";
+    }
+
+    @PostMapping("/admin/reset")
+    public String changePass(@RequestParam String password, HttpServletRequest req){
+        return adminService.changePassword(password, req);
     }
 }

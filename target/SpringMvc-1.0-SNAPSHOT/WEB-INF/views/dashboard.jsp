@@ -100,7 +100,8 @@
 </head>
 <body class="container">
     <h1>Dashboard</h1>
-    <a class="btn" href="${pageContext.request.contextPath}/">Go page to home page</a>
+    <a class="btn" href="${pageContext.request.contextPath}/">Home page</a>
+    <a href="${pageContext.request.contextPath}/admin/reset">Change password</a>
     <div class="wrapper">
         <div>
             <div class="col-wrapper">
@@ -110,7 +111,6 @@
                         <p><strong>Source</strong></p>
                         <p><strong>Destination</strong></p>
                     </div>
-                    <jsp:useBean id="placeList" scope="request" type="java.util.List"/>
                     <c:forEach items="${placeList}" var="place">
                         <div class="inner-container-items inner-container">
                             <p>${place.source}</p>

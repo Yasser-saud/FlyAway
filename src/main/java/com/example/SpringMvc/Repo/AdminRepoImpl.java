@@ -29,8 +29,12 @@ public class AdminRepoImpl implements AdminRepo{
         return (Admin) query.uniqueResult();
     }
 
+    public int updatePassword(int id, String password) {
+        Query query = sessionFactory.getCurrentSession().createQuery("update Admin set password =:password where id = :id");
+        query.setParameter("id", id);
+        query.setParameter("password", password);
 
-    public void update(){
-//        sessionFactory.getCurrentSession().update();
+        return query.executeUpdate();
     }
+
 }

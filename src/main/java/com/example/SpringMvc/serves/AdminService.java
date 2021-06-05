@@ -32,6 +32,14 @@ public class AdminService {
         this.adminRepo = adminRepo;
     }
 
+    public boolean isAdmin(HttpServletRequest req){
+        HttpSession session = req.getSession();
+        if(session.getAttribute("admin") != null){
+            return true;
+        }
+        return false;
+    }
+
     public String login(String username, String password, HttpServletRequest req){
         if(username.length() <= 0 || password.length() <= 0){
             return "redirect:/login?error=1";
@@ -39,15 +47,22 @@ public class AdminService {
 
         Admin admin = adminRepo.getByUsername(username);
 
-        if(adminRepo.getByUsername(username) == null){
+        if(admin == null){
             return "redirect:/login?error=2";
         }
-        else if(!adminRepo.getByUsername(username).getPassword().equals(password)){
+        else if(!admin.getPassword().equals(password)){
             return "redirect:/login?error=3";
         }
         HttpSession session = req.getSession();
         session.setAttribute("admin", admin);
+//        adminRepo.updatePassword(admin.getId() ,"admin2");
 
+        return "redirect:/login";
+    }
+
+    public String logout(HttpServletRequest req){
+        HttpSession session = req.getSession();
+        session.invalidate();
         return "redirect:/login";
     }
 
@@ -104,5 +119,16 @@ public class AdminService {
                 price, place, airline
         ));
         return new ModelAndView("redirect:/dashboard");
+    }
+
+    public String changePassword(String password, HttpServletRequest req) {
+        if(password.length() <= 0){
+            return "redirect:/admin/reset?error=1";
+        }
+        HttpSession session = req.getSession();
+        Admin admin = (Admin) session.getAttribute("admin");
+        adminRepo.updatePassword(admin.getId(), password);
+
+        return "redirect:/dashboard";
     }
 }
