@@ -52,7 +52,7 @@ public class AdminService {
         List<Flight> flightList = flightRepo.getAllFlights();
 
         mav.addObject("placeList", placeList);
-        mav.addObject("airLineList", airlineList);
+        mav.addObject("airlineList", airlineList);
         mav.addObject("flightList", flightList);
 
         return mav;

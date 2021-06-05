@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="com.example.SpringMvc.model.Place" %>
 <%--
   Created by IntelliJ IDEA.
   User: yasse
@@ -36,18 +37,17 @@
             padding: 0 20px;
             border-radius: 8px;
         }
-        .header{
+        .inner-container{
             width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .flight-container{
-            font-size: 13px;
-            width: 100%;
+        .inner-container-items > p{
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             align-items: center;
+            min-width: 50px;
         }
         .col-wrapper{
             display: flex;
@@ -64,23 +64,57 @@
             border-radius: 50px;
 
         }
+        table.greyGridTable {
+            border: 2px solid #FFFFFF;
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+            border-radius: 8px;
+        }
+        table.greyGridTable td, table.greyGridTable th {
+            border: 1px solid #FFFFFF;
+            padding: 3px 4px;
+        }
+        table.greyGridTable tbody td {
+            font-size: 10px;
+        }
+        table.greyGridTable td:nth-child(even) {
+            background: #EBEBEB;
+        }
+        table.greyGridTable thead {
+            background: #FFFFFF;
+            border-bottom: 4px solid #333333;
+        }
+        table.greyGridTable thead th {
+            font-size: 12px;
+            font-weight: bold;
+            color: #333333;
+            text-align: center;
+            border-left: 2px solid #333333;
+        }
+        table.greyGridTable thead th:first-child {
+            border-left: none;
+        }
+
     </style>
 </head>
 <body class="container">
     <h1>Dashboard</h1>
+    <a class="btn" href="${pageContext.request.contextPath}/">Go page to home page</a>
     <div class="wrapper">
         <div>
             <div class="col-wrapper">
                 <div class="col">
                     <h2>Places</h2>
-                    <div class="header">
+                    <div class="inner-container">
                         <p><strong>Source</strong></p>
                         <p><strong>Destination</strong></p>
                     </div>
+                    <jsp:useBean id="placeList" scope="request" type="java.util.List"/>
                     <c:forEach items="${placeList}" var="place">
-                        <div class="header">
+                        <div class="inner-container-items inner-container">
                             <p>${place.source}</p>
-                            >>>
+                            <p>➡</p>
                             <p>${place.destination}</p>
                         </div>
                     </c:forEach>
@@ -94,7 +128,7 @@
                <div class="col">
                    <h2>Airlines</h2>
                    <c:forEach items="${airlineList}" var="airline">
-                       <p>${airline.name}</p>
+                       <p>✈ ${airline.name}</p>
                    </c:forEach>
                </div>
                <a class="btn" href="dashboard/add-airline">Add Airline</a>
@@ -103,15 +137,26 @@
         <div class="col-wrapper">
             <div class="col">
                 <h2>Flights</h2>
-                <c:forEach items="${flightList}" var="flight">
-                    <div class="flight-container">
-                        <p>${flight.getPlace().getSource()}</p>
-                        >>
-                        <p>${flight.getPlace().getDestination()}</p>
-                        <p>✈ ${flight.getAirLine().getName()}</p>
-                        <p>$${flight.price}</p>
-                    </div>
-                </c:forEach>
+                <table class="greyGridTable">
+                    <thead>
+                    <tr>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Airline</th>
+                        <th>Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${flightList}" var="flight">
+                        <tr>
+                            <td>${flight.getPlace().getSource()}</td>
+                            <td>${flight.getPlace().getDestination()}</td>
+                            <td>✈ ${flight.getAirLine().getName()}</td>
+                            <td>$ ${flight.price}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
             </div>
             <a class="btn" href="dashboard/add-flight">Add Flight</a>
         </div>
