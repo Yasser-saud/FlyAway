@@ -7,4 +7,5 @@ public interface FlightRepo {
     void addFlight(Flight flight);
     List<Flight> getAllFlights();
     Flight getById(Integer flightId);
+    List<Flight> findFlight(String source, String destination);
 }
