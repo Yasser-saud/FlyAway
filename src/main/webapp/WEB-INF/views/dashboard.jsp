@@ -12,11 +12,18 @@
 <head>
     <title>Dashboard</title>
     <style>
+        body{
+            height: 100vh;
+            display: grid;
+            place-content: center;
+            font-size: 20px;
+        }
         .container{
             display: flex;
             flex-direction: column;
             justify-content: space-around;
             align-items: center;
+            min-width: 1900px;
         }
         .wrapper{
             width: 100%;
@@ -25,8 +32,7 @@
         }
         .col{
             background-color: #eeeeee;
-            max-width: 500px;
-            min-width: 300px;
+            min-width: 500px;
             height: 50vh;
             overflow: scroll;
             overflow-x: hidden;
@@ -76,7 +82,7 @@
             padding: 3px 4px;
         }
         table.greyGridTable tbody td {
-            font-size: 10px;
+            font-size: 16px;
         }
         table.greyGridTable td:nth-child(even) {
             background: #EBEBEB;
@@ -86,7 +92,7 @@
             border-bottom: 4px solid #333333;
         }
         table.greyGridTable thead th {
-            font-size: 12px;
+            font-size: 16px;
             font-weight: bold;
             color: #333333;
             text-align: center;
@@ -98,67 +104,70 @@
 
     </style>
 </head>
-<body class="container">
-    <h1>Dashboard</h1>
-    <a class="btn" href="${pageContext.request.contextPath}/">Home page</a>
-    <a href="${pageContext.request.contextPath}/admin/reset">Change password</a>
-    <div class="wrapper">
-        <div>
+<body >
+    <div class="container">
+        <h1>Dashboard</h1>
+        <a class="btn" href="${pageContext.request.contextPath}/">Home page</a>
+        <a href="${pageContext.request.contextPath}/admin/reset">Change password</a>
+        <a href="${pageContext.request.contextPath}/logout">Logout</a>
+        <div class="wrapper">
+            <div>
+                <div class="col-wrapper">
+                    <div class="col">
+                        <h2>Places</h2>
+                        <div class="inner-container">
+                            <p><strong>Source</strong></p>
+                            <p><strong>Destination</strong></p>
+                        </div>
+                        <c:forEach items="${placeList}" var="place">
+                            <div class="inner-container-items inner-container">
+                                <p>${place.source}</p>
+                                <p>➡</p>
+                                <p>${place.destination}</p>
+                            </div>
+                        </c:forEach>
+                    </div>
+                    <a class="btn" href="dashboard/add-place">Add Places</a>
+                </div>
+            </div>
+
+            <div>
+                <div class="col-wrapper">
+                    <div class="col">
+                        <h2>Airlines</h2>
+                        <c:forEach items="${airlineList}" var="airline">
+                            <p>✈ ${airline.name}</p>
+                        </c:forEach>
+                    </div>
+                    <a class="btn" href="dashboard/add-airline">Add Airline</a>
+                </div>
+            </div>
             <div class="col-wrapper">
                 <div class="col">
-                    <h2>Places</h2>
-                    <div class="inner-container">
-                        <p><strong>Source</strong></p>
-                        <p><strong>Destination</strong></p>
-                    </div>
-                    <c:forEach items="${placeList}" var="place">
-                        <div class="inner-container-items inner-container">
-                            <p>${place.source}</p>
-                            <p>➡</p>
-                            <p>${place.destination}</p>
-                        </div>
-                    </c:forEach>
-                </div>
-                <a class="btn" href="dashboard/add-place">Add Places</a>
-            </div>
-        </div>
-
-        <div>
-           <div class="col-wrapper">
-               <div class="col">
-                   <h2>Airlines</h2>
-                   <c:forEach items="${airlineList}" var="airline">
-                       <p>✈ ${airline.name}</p>
-                   </c:forEach>
-               </div>
-               <a class="btn" href="dashboard/add-airline">Add Airline</a>
-           </div>
-        </div>
-        <div class="col-wrapper">
-            <div class="col">
-                <h2>Flights</h2>
-                <table class="greyGridTable">
-                    <thead>
-                    <tr>
-                        <th>Source</th>
-                        <th>Destination</th>
-                        <th>Airline</th>
-                        <th>Price</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${flightList}" var="flight">
+                    <h2>Flights</h2>
+                    <table class="greyGridTable">
+                        <thead>
                         <tr>
-                            <td>${flight.getPlace().getSource()}</td>
-                            <td>${flight.getPlace().getDestination()}</td>
-                            <td>✈ ${flight.getAirLine().getName()}</td>
-                            <td>$ ${flight.price}</td>
+                            <th>Source</th>
+                            <th>Destination</th>
+                            <th>Airline</th>
+                            <th>Price</th>
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${flightList}" var="flight">
+                            <tr>
+                                <td>${flight.getPlace().getSource()}</td>
+                                <td>${flight.getPlace().getDestination()}</td>
+                                <td>✈ ${flight.getAirLine().getName()}</td>
+                                <td>$ ${flight.price}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+                <a class="btn" href="dashboard/add-flight">Add Flight</a>
             </div>
-            <a class="btn" href="dashboard/add-flight">Add Flight</a>
         </div>
     </div>
 </body>

@@ -75,13 +75,9 @@
             <tbody>
             <jsp:useBean id="result" scope="request" type="java.util.List<com.example.SpringMvc.model.Flight>"/>
             <c:forEach var="flight" items="${result}">
-                <tr>
-                    <td>${flight.place.source}</td>
-                    <td>${flight.place.destination}</td>
-                    <td>${flight.airLine.name}</td>
-                    <td>$${flight.price}</td>
-                    <td><a href="${pageContext.request.contextPath}/checkout?fno=${flight.id}&pass=${pass}">Book this flight$</a></td>
-                </tr>
+                <c:if test="${result.size() < 0}">
+                    
+                </c:if>
             </c:forEach>
             </tbody>
         </table>

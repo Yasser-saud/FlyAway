@@ -38,9 +38,18 @@ public class AdminController {
         return adminService.login(username, password, req);
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest req){
+        return adminService.logout(req);
+    }
+
     @GetMapping("/dashboard")
     public ModelAndView dashboard(HttpServletRequest req){
-        return adminService.getDashboard(req);
+        boolean isAdmin = adminService.isAdmin(req);
+        if(isAdmin){
+            return adminService.getDashboard(req);
+        }
+        return new ModelAndView("redirect:/login");
     }
 
     @GetMapping("/dashboard/add-place")

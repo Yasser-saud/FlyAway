@@ -4,10 +4,13 @@ import com.example.SpringMvc.serves.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class CustomerController {
@@ -29,11 +32,32 @@ public class CustomerController {
         return customerService.searchResult(req);
     }
 
+    @GetMapping("/register")
+    public String registerPage(HttpServletRequest req){
+        HttpSession session = req.getSession();
+        if(session.getAttribute("user") != null){
+            return "redirect:/checkout";
+        }
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public ModelAndView register(HttpServletRequest req, @RequestParam String username, @RequestParam String password){
+        return customerService.register(username, password, req);
+    }
+
     @GetMapping("/checkout")
-    public ModelAndView checkout(HttpServletRequest req){
-        ModelAndView mav = new ModelAndView("register");
-        String fno = req.getParameter("fno");
-        mav.addObject("fno", fno);
-        return mav;
+    public String checkout(HttpServletRequest req){
+        return customerService.checkoutPage(req);
+    }
+
+    @PostMapping("/checkout")
+    public String checkoutHandler(HttpServletRequest req, @RequestParam String fname, @RequestParam String cc){
+        return customerService.bookTicket(req, fname, cc);
+    }
+
+    @GetMapping("/confirmation")
+    public ModelAndView confirmation(HttpServletRequest req){
+        return customerService.confirmation(req);
     }
 }

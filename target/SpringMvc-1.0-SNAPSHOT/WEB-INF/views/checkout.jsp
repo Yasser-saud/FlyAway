@@ -1,14 +1,14 @@
 <%--
   Created by IntelliJ IDEA.
   User: yasse
-  Date: 6/4/2021
-  Time: 12:50 AM
+  Date: 6/6/2021
+  Time: 5:00 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Admin login</title>
+    <title>Checkout</title>
     <style>
         body{
             height: 100vh;
@@ -17,7 +17,7 @@
             font-size: 20px;
         }
         .container{
-            height: 400px;
+            height: 300px;
             display: flex;
             flex-direction: column;
             justify-content: space-around;
@@ -25,10 +25,10 @@
         }
         .form{
             display: flex;
+            align-items: center;
             flex-direction: column;
             justify-content: space-around;
-            align-items: center;
-            height: 100%;
+            height: 200px;
         }
         input{
             height: 35px;
@@ -43,32 +43,19 @@
 </head>
 <body>
     <div class="container">
-        <h1>Login</h1>
-        <%
-            if(request.getParameter("error") != null){
-                String param = request.getParameter("error");
-                if(param.equals("2")){
-                    out.println("<h3>username does not exist</h3>");
-                }
-                else if(param.equals("3")){
-                    out.println("<h3>username or password is wrong</h3>");
-                }
-                else {
-                    out.println("<h3>Please fill the field</h3>");
-                }
-            }%>
-        <form class="form" action="login" method="post">
+        <h1>Checkout</h1>
+        <form class="form" action="${pageContext.request.contextPath}/checkout" method="post">
             <div>
-                <label>username</label>
+                <label>Full name</label>
                 <br/>
-                <input name="username" type="text">
+                <input name="fname" type="text"/>
                 <br/>
-                <label>password</label>
+                <label>Credit card number</label>
                 <br/>
-                <input name="password" type="password">
+                <input name="cc" type="text"/>
                 <br/>
             </div>
-            <button type="submit">Login</button>
+            <button type="submit">Book</button>
         </form>
     </div>
 </body>

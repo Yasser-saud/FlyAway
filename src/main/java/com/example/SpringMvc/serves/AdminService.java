@@ -1,13 +1,10 @@
 package com.example.SpringMvc.serves;
 
-import com.example.SpringMvc.Repo.AdminRepo;
+import com.example.SpringMvc.Repo.UserRepo;
 import com.example.SpringMvc.Repo.AirlineRepo;
 import com.example.SpringMvc.Repo.FlightRepo;
 import com.example.SpringMvc.Repo.PlaceRepo;
-import com.example.SpringMvc.model.Admin;
-import com.example.SpringMvc.model.Airline;
-import com.example.SpringMvc.model.Flight;
-import com.example.SpringMvc.model.Place;
+import com.example.SpringMvc.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,22 +19,19 @@ public class AdminService {
     private final PlaceRepo placeRepo;
     private final AirlineRepo airlineRepo;
     private final FlightRepo flightRepo;
-    private final AdminRepo adminRepo;
+    private final UserRepo userRepo;
 
     @Autowired
-    public AdminService(PlaceRepo placeRepo, AirlineRepo airlineRepo, FlightRepo flightRepo, AdminRepo adminRepo) {
+    public AdminService(PlaceRepo placeRepo, AirlineRepo airlineRepo, FlightRepo flightRepo, UserRepo userRepo) {
         this.placeRepo = placeRepo;
         this.airlineRepo = airlineRepo;
         this.flightRepo = flightRepo;
-        this.adminRepo = adminRepo;
+        this.userRepo = userRepo;
     }
 
     public boolean isAdmin(HttpServletRequest req){
         HttpSession session = req.getSession();
-        if(session.getAttribute("admin") != null){
-            return true;
-        }
-        return false;
+        return session.getAttribute("admin") != null;
     }
 
     public String login(String username, String password, HttpServletRequest req){
@@ -45,17 +39,17 @@ public class AdminService {
             return "redirect:/login?error=1";
         }
 
-        Admin admin = adminRepo.getByUsername(username);
+        User user = userRepo.getByUsername(username);
 
-        if(admin == null){
+        if(user == null || user.getRole() != Role.ADMIN){
             return "redirect:/login?error=2";
         }
-        else if(!admin.getPassword().equals(password)){
+        else if(!user.getPassword().equals(password)){
             return "redirect:/login?error=3";
         }
+
         HttpSession session = req.getSession();
-        session.setAttribute("admin", admin);
-//        adminRepo.updatePassword(admin.getId() ,"admin2");
+        session.setAttribute("admin", user);
 
         return "redirect:/login";
     }
@@ -69,10 +63,6 @@ public class AdminService {
     public ModelAndView getDashboard(HttpServletRequest req){
         ModelAndView mav = new ModelAndView("dashboard");
         HttpSession session = req.getSession();
-
-        if(session.getAttribute("admin") == null){
-            return new ModelAndView("redirect:/login?error=1");
-        }
 
         List<Place> placeList = placeRepo.getAllPlaces();
         List<Airline> airlineList = airlineRepo.getAllAirLines();
@@ -112,12 +102,14 @@ public class AdminService {
         if(price <= 0){
             return new ModelAndView("redirect:/dashboard/add-flight?error=1");
         }
+
         Place place = placeRepo.getById(placeId);
         Airline airline = airlineRepo.getById(airlineId);
 
         flightRepo.addFlight(new Flight(
                 price, place, airline
         ));
+
         return new ModelAndView("redirect:/dashboard");
     }
 
@@ -126,8 +118,8 @@ public class AdminService {
             return "redirect:/admin/reset?error=1";
         }
         HttpSession session = req.getSession();
-        Admin admin = (Admin) session.getAttribute("admin");
-        adminRepo.updatePassword(admin.getId(), password);
+        User user = (User) session.getAttribute("admin");
+        userRepo.updatePassword(user.getId(), password);
 
         return "redirect:/dashboard";
     }

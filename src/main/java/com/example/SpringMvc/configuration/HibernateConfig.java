@@ -1,6 +1,6 @@
 package com.example.SpringMvc.configuration;
 
-import com.example.SpringMvc.model.Admin;
+import com.example.SpringMvc.model.User;
 import com.example.SpringMvc.model.Airline;
 import com.example.SpringMvc.model.Flight;
 import com.example.SpringMvc.model.Place;
@@ -45,7 +45,7 @@ public class HibernateConfig {
         properties.put("hibernate.show_sql","true");
         properties.put("hibernate.hbm2ddl.auto","update");
         factoryBean.setHibernateProperties(properties);
-        factoryBean.setAnnotatedClasses(Place.class, Airline.class, Flight.class, Admin.class);
+        factoryBean.setAnnotatedClasses(Place.class, Airline.class, Flight.class, User.class);
         return factoryBean;
     }
 

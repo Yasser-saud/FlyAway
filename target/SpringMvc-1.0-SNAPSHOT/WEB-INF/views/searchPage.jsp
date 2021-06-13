@@ -80,7 +80,7 @@
                     <td>${flight.place.destination}</td>
                     <td>${flight.airLine.name}</td>
                     <td>$${flight.price}</td>
-                    <td><a href="${pageContext.request.contextPath}/checkout?fno=${flight.id}&pass=${pass}">Book this flight$</a></td>
+                    <td><a href="${pageContext.request.contextPath}/checkout?fno=${flight.id}">Book This Flight</a></td>
                 </tr>
             </c:forEach>
             </tbody>
