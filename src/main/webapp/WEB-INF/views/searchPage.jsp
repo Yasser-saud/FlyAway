@@ -11,10 +11,11 @@
 <head>
     <title>Search result</title>
     <style>
-        .parent{
+        body{
             display: grid;
             place-content: center;
             height: 90vh;
+            font-size: 20px;
         }
         .container{
             display: flex;
@@ -59,28 +60,40 @@
 
     </style>
 </head>
-<body class="parent">
+<body >
     <div class="container">
         <h1>Search result</h1>
-        <table class="blueTable">
-            <thead>
-            <tr>
-                <th>Source</th>
-                <th>Destination</th>
-                <th>Airline</th>
-                <th>Price</th>
-                <th>Book</th>
-            </tr>
-            </thead>
-            <tbody>
-            <jsp:useBean id="result" scope="request" type="java.util.List<com.example.SpringMvc.model.Flight>"/>
-            <c:forEach var="flight" items="${result}">
-                <c:if test="${result.size() < 0}">
-                    
-                </c:if>
-            </c:forEach>
-            </tbody>
-        </table>
+        <c:choose>
+            <c:when test="${result.size() <= 0}">
+                <h3>No match</h3>
+                <a href="${pageContext.request.contextPath}/">refine my search</a>
+            </c:when>
+            <c:otherwise>
+                <table class="blueTable">
+                    <thead>
+                    <tr>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Airline</th>
+                        <th>Price</th>
+                        <th>Book</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <jsp:useBean id="result" scope="request" type="java.util.List<com.example.SpringMvc.model.Flight>"/>
+                    <c:forEach var="flight" items="${result}">
+                        <tr>
+                            <td>${flight.place.source}</td>
+                            <td>${flight.place.destination}</td>
+                            <td>${flight.airLine.name}</td>
+                            <td>$${flight.price}</td>
+                            <td><a href="${pageContext.request.contextPath}/checkout?fno=${flight.id}">Book This Flight</a></td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:otherwise>
+        </c:choose>
     </div>
 </body>
 </html>

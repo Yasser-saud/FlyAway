@@ -42,6 +42,7 @@ public class CustomerService {
         }
         System.out.println(source+" "+destination+" "+date+" "+passengers);
         List<Flight> result = flightRepo.findFlight(source, destination);
+        System.out.println("result "+ result.size());
         session.setAttribute("pass", passengers);
         session.setAttribute("date", date);
         mav.addObject("result", result);
