@@ -1,4 +1,4 @@
-package com.example.SpringMvc.serves;
+package com.example.SpringMvc.service;
 
 import com.example.SpringMvc.Repo.UserRepo;
 import com.example.SpringMvc.Repo.AirlineRepo;

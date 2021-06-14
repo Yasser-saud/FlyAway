@@ -1,6 +1,6 @@
 package com.example.SpringMvc.controller;
 
-import com.example.SpringMvc.serves.CustomerService;
+import com.example.SpringMvc.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,18 +42,18 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public ModelAndView register(HttpServletRequest req, @RequestParam String username, @RequestParam String password){
+    public String register(HttpServletRequest req, @RequestParam String username, @RequestParam String password){
         return customerService.register(username, password, req);
     }
 
     @GetMapping("/checkout")
-    public String checkout(HttpServletRequest req){
+    public ModelAndView checkout(HttpServletRequest req){
         return customerService.checkoutPage(req);
     }
 
     @PostMapping("/checkout")
-    public String checkoutHandler(HttpServletRequest req, @RequestParam String fname, @RequestParam String cc){
-        return customerService.bookTicket(req, fname, cc);
+    public String checkoutHandler(HttpServletRequest req, @RequestParam String fname, @RequestParam String cardNum, @RequestParam String cc){
+        return customerService.bookTicket(req, fname, cardNum, cc);
     }
 
     @GetMapping("/confirmation")

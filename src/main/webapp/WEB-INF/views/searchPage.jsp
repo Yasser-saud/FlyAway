@@ -1,3 +1,4 @@
+<%@ page import="org.springframework.web.servlet.ModelAndView" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -87,7 +88,9 @@
                             <td>${flight.place.destination}</td>
                             <td>${flight.airLine.name}</td>
                             <td>$${flight.price}</td>
-                            <td><a href="${pageContext.request.contextPath}/checkout?fno=${flight.id}">Book This Flight</a></td>
+
+                            <td><a href="${pageContext.request.contextPath}/checkout?fno=${flight.id}">
+                                Book This Flight</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>
