@@ -87,7 +87,7 @@
                             out.println("<h4 style=\\\"color: red\\\">please enter a valid security code</h3>");
                         }
                         else {
-                            out.println("<h4 style=\"color: red\">Please fill the field</h3>");
+                            out.println("<h4 style=\"color: red\">Please complete the field</h3>");
                         }
                     }%>
                 <div>
