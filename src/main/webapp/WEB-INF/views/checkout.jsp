@@ -54,6 +54,8 @@
             align-items: center;
         }
         .card{
+            display: flex;
+            flex-direction: column;
             margin: 30px 0;
         }
         small{
@@ -100,7 +102,9 @@
                         <br/>
                         <input name="cardNum" type="text"/>
                         <br/>
-                        <small>◾ Only numbers separated by dashes</small>
+                        <small>◾ Only numbers</small>
+                        <small>◾ Minimum 10 numbers</small>
+                        <small>◾ Maximum 20 numbers</small>
                         <br/>
                     </div>
                     <label>Security code</label>

@@ -57,11 +57,11 @@
            <div>
                <label>Username</label>
                <br/>
-               <input name="username"/>
+               <input name="username" type="text"/>
                <br/>
                <label>password</label>
                <br/>
-               <input name="password"/>
+               <input name="password" type="password"/>
                <br/>
            </div>
             <button type="submit">Register</button>

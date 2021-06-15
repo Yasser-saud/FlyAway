@@ -54,6 +54,8 @@
             align-items: center;
         }
         .card{
+            display: flex;
+            flex-direction: column;
             margin: 30px 0;
         }
         small{
@@ -84,10 +86,10 @@
                             out.println("<h4 style=\"color: red\">please enter a valid credit card number</h3>");
                         }
                         else if(param.equals("3")){
-                            out.println("\"<h4 style=\\\"color: red\\\">please enter a valid security code</h3>\"");
+                            out.println("<h4 style=\\\"color: red\\\">please enter a valid security code</h3>");
                         }
                         else {
-                            out.println("<h4 style=\"color: red\">Please fill the field</h3>");
+                            out.println("<h4 style=\"color: red\">Please complete the field</h3>");
                         }
                     }%>
                 <div>
@@ -100,7 +102,9 @@
                         <br/>
                         <input name="cardNum" type="text"/>
                         <br/>
-                        <small>◾ Only numbers separated by dashes</small>
+                        <small>◾ Only numbers</small>
+                        <small>◾ Minimum 10 numbers</small>
+                        <small>◾ Maximum 20 numbers</small>
                         <br/>
                     </div>
                     <label>Security code</label>
